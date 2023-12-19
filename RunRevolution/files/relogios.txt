@@ -1,0 +1,2 @@
+Garmin Forerunner;1399.90;399;735xt;true;true
+G-Shock;399;299;GWG-100;false;true

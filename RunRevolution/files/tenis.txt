@@ -1,0 +1,2 @@
+Nike 6;399;899;Revolution 6;Masculino;42
+Under Armor;1299.90;159;Charged First;Feminino;35

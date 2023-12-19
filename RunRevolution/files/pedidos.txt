@@ -1,0 +1,6 @@
+P;Primeiro pedido do dia;Em andamento;1
+R;1
+RP;1
+R;2
+RP;2
+T;1
