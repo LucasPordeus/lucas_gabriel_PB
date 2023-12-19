@@ -40,6 +40,8 @@ public class Pedido {
         );
     }
 
+    public Pedido() {}
+
     public Integer getId() {
         return id;
     }

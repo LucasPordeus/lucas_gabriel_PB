@@ -39,13 +39,29 @@ public class UsuarioService {
     }
 
     public void atualizar(Usuario usuario) {
-        Optional<Usuario> usuarioExistente = usuarioRepository.findById(usuario.getId());
+        Optional<Usuario> usuarioExistenteOptional = usuarioRepository.findById(usuario.getId());
 
-        if (usuarioExistente.isPresent()) {
-            Usuario usuarioAtualizado = usuarioExistente.get();
-            usuarioRepository.save(usuarioAtualizado);
-        } else
+        if (usuarioExistenteOptional.isPresent()) {
+            Usuario usuarioExistente = usuarioExistenteOptional.get();
+            usuarioExistente.setNome(usuario.getNome());
+            usuarioExistente.setAcesso(usuario.getAcesso());
+            usuarioExistente.setLogin(usuario.getLogin());
+            usuarioExistente.setSenha(usuario.getSenha());
+
+            Endereco enderecoExistente = usuarioExistente.getEndereco();
+            Endereco enderecoAtualizado = usuario.getEndereco();
+
+            enderecoExistente.setCep(enderecoAtualizado.getCep());
+            enderecoExistente.setLogradouro(enderecoAtualizado.getLogradouro());
+            enderecoExistente.setComplemento(enderecoAtualizado.getComplemento());
+            enderecoExistente.setBairro(enderecoAtualizado.getBairro());
+            enderecoExistente.setUf(enderecoAtualizado.getUf());
+            enderecoExistente.setLocalidade(enderecoAtualizado.getLocalidade());
+
+            usuarioRepository.save(usuarioExistente);
+        } else {
             throw new UsuarioNaoEncontradoException("Usuario com ID " + usuario.getId() + " não encontrado.");
+        }
     }
 
     public Optional<Usuario> obterPorId(Integer id) {

@@ -1,8 +1,11 @@
 package RunRevolution.model.domain;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
+
 import javax.persistence.Entity;
 
 @Entity
+@JsonTypeName("Tenis")
 public class Tenis extends Produto {
 
         private String modelo;

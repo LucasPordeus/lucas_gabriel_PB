@@ -1,14 +1,10 @@
 package RunRevolution.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 
 import RunRevolution.model.domain.Pedido;
 import RunRevolution.model.service.PedidoService;
@@ -17,28 +13,34 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/pedido")
+@Api(value = "PedidoController", tags = "Pedido Controller")
 public class PedidoController {
     @Autowired
     private PedidoService pedidoService;
 
     @GetMapping(value = "/listar")
+    @ApiOperation(value = "Obter lista de pedidos", response = List.class)
     public List<Pedido> obterLista(){
         return (List<Pedido>) pedidoService.obterLista();
     }
 
     @PostMapping(value = "/incluir")
+    @ApiOperation(value = "Incluir um novo pedido")
     public void incluir(@RequestBody Pedido pedido) {
         pedidoService.incluir(pedido);
     }
 
     @PutMapping(value = "/{id}/atualizar")
-    public void atualizar(@PathVariable Integer id, @RequestBody Pedido pedido) {
+    @ApiOperation(value = "Atualizar um pedido existente")
+    public void atualizar(@PathVariable @ApiParam(value = "ID do pedido a ser atualizado", required = true) Integer id,
+                          @RequestBody @ApiParam(value = "Dados do pedido atualizado", required = true) Pedido pedido) {
         pedido.setId(id);
         pedidoService.atualizar(pedido);
     }
 
     @DeleteMapping(value = "/{id}/excluir")
-    public void excluir(@PathVariable Integer id) {
+    @ApiOperation(value = "Excluir um pedido pelo ID")
+    public void excluir(@PathVariable @ApiParam(value = "ID do pedido a ser excluído", required = true) Integer id) {
         pedidoService.excluir(id);
     }
 }

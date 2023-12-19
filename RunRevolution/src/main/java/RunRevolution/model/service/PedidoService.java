@@ -28,12 +28,19 @@ public class PedidoService {
     }
 
     public void atualizar(Pedido pedido) {
-        Optional<Pedido> pedidoExistente = pedidoRepository.findById(pedido.getId());
+        Optional<Pedido> pedidoExistenteOptional = pedidoRepository.findById(pedido.getId());
 
-        if (pedidoExistente.isPresent()) {
-            Pedido pedidoAtualizado = pedidoExistente.get();
-            pedidoRepository.save(pedidoAtualizado);
-        } else
+        if (pedidoExistenteOptional.isPresent()) {
+            Pedido pedidoExistente = pedidoExistenteOptional.get();
+            pedidoExistente.setData(pedido.getData());
+            pedidoExistente.setDescricao(pedido.getDescricao());
+            pedidoExistente.setStatus(pedido.getStatus());
+            pedidoExistente.setUsuario(pedido.getUsuario());
+            pedidoExistente.setProdutos(pedido.getProdutos());
+
+            pedidoRepository.save(pedidoExistente);
+        } else {
             throw new PedidoNaoEncontradoException("Pedido com ID " + pedido.getId() + " não encontrado.");
+        }
     }
 }

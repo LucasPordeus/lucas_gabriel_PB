@@ -28,12 +28,17 @@ public class RoupaService {
     }
 
     public void atualizar(Roupa roupa) {
-        Optional<Roupa> roupaExistente = roupaRepository.findById(roupa.getId());
+        Optional<Roupa> roupaExistenteOptional = roupaRepository.findById(roupa.getId());
 
-        if (roupaExistente.isPresent()) {
-            Roupa roupaAtualizado = roupaExistente.get();
-            roupaRepository.save(roupaAtualizado);
-        } else
+        if (roupaExistenteOptional.isPresent()) {
+            Roupa roupaExistente = roupaExistenteOptional.get();
+            roupaExistente.setNome(roupa.getNome());
+            roupaExistente.setValor(roupa.getValor());
+            roupaExistente.setQuantidade(roupa.getQuantidade());
+
+            roupaRepository.save(roupaExistente);
+        } else {
             throw new RoupaNaoEncontradaException("Roupa com ID " + roupa.getId() + " não encontrado.");
+        }
     }
 }

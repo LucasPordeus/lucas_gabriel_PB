@@ -41,7 +41,7 @@ public class ProdutoLoader implements ApplicationRunner {
                     produto = new Roupa();
                     ((Roupa) produto).setTamanho(campos[7]);
                     ((Roupa) produto).setSexo(campos[8]);
-                    ((Roupa) produto).setTipo(campos[9]);
+                    ((Roupa) produto).setSubTipo(campos[9]);
                     break;
                 case "Tenis":
                     produto = new Tenis();

@@ -28,12 +28,17 @@ public class TenisService {
     }
 
     public void atualizar(Tenis tenis) {
-        Optional<Tenis> tenisExistente = tenisRepository.findById(tenis.getId());
+        Optional<Tenis> tenisExistenteOptional = tenisRepository.findById(tenis.getId());
 
-        if (tenisExistente.isPresent()) {
-            Tenis tenisAtualizado = tenisExistente.get();
-            tenisRepository.save(tenisAtualizado);
-        } else
+        if (tenisExistenteOptional.isPresent()) {
+            Tenis tenisExistente = tenisExistenteOptional.get();
+            tenisExistente.setNome(tenis.getNome());
+            tenisExistente.setValor(tenis.getValor());
+            tenisExistente.setQuantidade(tenis.getQuantidade());
+
+            tenisRepository.save(tenisExistente);
+        } else {
             throw new TenisNaoEncontradoException("Tenis com ID " + tenis.getId() + " não encontrado.");
+        }
     }
 }

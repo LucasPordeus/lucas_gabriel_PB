@@ -28,12 +28,17 @@ public class RelogioService {
     }
 
     public void atualizar(Relogio relogio) {
-        Optional<Relogio> relogioExistente = relogioRepository.findById(relogio.getId());
+        Optional<Relogio> relogioExistenteOptional = relogioRepository.findById(relogio.getId());
 
-        if (relogioExistente.isPresent()) {
-            Relogio relogioAtualizado = relogioExistente.get();
-            relogioRepository.save(relogioAtualizado);
-        } else
+        if (relogioExistenteOptional.isPresent()) {
+            Relogio relogioExistente = relogioExistenteOptional.get();
+            relogioExistente.setNome(relogio.getNome());
+            relogioExistente.setValor(relogio.getValor());
+            relogioExistente.setQuantidade(relogio.getQuantidade());
+
+            relogioRepository.save(relogioExistente);
+        } else {
             throw new RelogioNaoEncontradoException("Relogio com ID " + relogio.getId() + " não encontrado.");
+        }
     }
 }

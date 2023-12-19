@@ -36,7 +36,7 @@ public class RoupaLoader implements ApplicationRunner {
             roupa.setQuantidade(Integer.valueOf(campos[2]));
             roupa.setTamanho((campos[3]));
             roupa.setSexo(campos[4]);
-            roupa.setTipo(campos[5]);
+            roupa.setSubTipo(campos[5]);
 
             roupaService.incluir(roupa);
 
